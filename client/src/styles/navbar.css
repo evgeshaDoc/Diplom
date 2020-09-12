@@ -1,0 +1,21 @@
+.content-padding {
+  padding: 0 1rem;
+}
+
+.logo {
+  font-size: 30px;
+  color: white;
+}
+
+div .nav-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+ul .menu-items {
+  display: flex;
+  flex-direction: row;
+}

@@ -1,0 +1,28 @@
+{
+  "name": "crm-dental",
+  "version": "1.0.0",
+  "description": "CRM system for dental clinics",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start-dev": "nodemon server.js"
+  },
+  "keywords": [
+    "js",
+    "react",
+    "node",
+    "express",
+    "socket"
+  ],
+  "author": "Evgeni Koloskov <kolosmanyc@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.10.3"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.4"
+  }
+}
