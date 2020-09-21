@@ -26,3 +26,8 @@ input:not(:focus):valid ~ .floating-label{
   -moz-box-shadow: -8px 10px 5px 0px rgba(0,0,0,0.15);
   box-shadow: -8px 10px 5px 0px rgba(0,0,0,0.15);
 }
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+}

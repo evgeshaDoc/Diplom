@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "start-dev": "nodemon server.js"
+    "start-dev": "nodemon server.js",
+    "dev": "concurrently \"npm run start-dev\" \"cd .. && cd client/ && npm run start\""
   },
   "keywords": [
     "js",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
+    "dotenv": "^8.2.0",
     "nodemon": "^2.0.4"
   }
 }

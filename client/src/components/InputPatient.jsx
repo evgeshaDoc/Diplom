@@ -1,12 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import '../styles/appiontment-page.css'
+import {InputContext} from "../contexts/InputContext";
 
 const InputPatient = ({name, label}) => {
-  const [value, setValue] = useState('')
-
-  useEffect(() => {
-    console.log(value)
-  }, [value])
+  const {changeHandler, form} = useContext(InputContext)
 
   return (
     <div className='input-field'>
@@ -15,8 +12,8 @@ const InputPatient = ({name, label}) => {
         id={name}
         name={name}
         className='validate'
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={form[name]}
+        onChange={(e) => changeHandler(e)}
       />
       <label htmlFor={name}>{label}</label>
     </div>
