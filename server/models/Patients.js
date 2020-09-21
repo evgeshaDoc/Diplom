@@ -44,7 +44,7 @@ Patients.methods.removeDiagnosis = async function (diag) {
   await this.save()
 }
 
-Patients.methods.deleteAllDiadnoses = async function (diag) {
+Patients.methods.deleteAllDiadnoses = async function () {
   this.diagnoses = {items: []}
   await this.save()
 }
