@@ -41,4 +41,34 @@ router.post('/:id',async (req, res) => {
   // })
 })
 
+router.post('/:id/edit', async (req, res) => {
+  const {id} = req.body
+  delete req.body.id
+
+  // return res.json({message: 'test working'})
+
+  const updatedAppointment = await Appointments
+    .populate('doctor')
+    .populate('patient')
+    .findOneAndUpdate({_id: req.body.id}, {...req.body})
+
+  if (!updatedAppointment.ok) {
+    return res.status(400).json({
+      message: 'Ошибка при обновлении приема. Проверьте введенные данные'
+    })
+  }
+
+  const appointment = Appointments.findOne({_id: id})
+
+  if (!appointment) {
+    return res.status(500).json({
+      message: 'Ошибка при обновлении приема. Попробуйте позднее'
+    })
+  }
+
+  res.status(200).json({
+    message: 'Данные о приеме успешно обновлены'
+  })
+})
+
 module.exports = router
