@@ -1,20 +1,27 @@
-const {Schema, model, Types} = require('mongoose')
+const { Schema, model, Types } = require('mongoose');
 
-const Appointments = new Schema({
-  number: {
-    type: Number,
-    autoIncrement: true
+const Appointments = new Schema(
+  {
+    number: {
+      type: Number,
+      autoIncrement: true,
+    },
+    dateOfAppointment: {
+      type: Date,
+      required: true,
+    },
+    doctor: {
+      type: Types.ObjectId,
+      ref: 'Users',
+    },
+    patient: {
+      type: Types.ObjectId,
+      ref: 'Patients',
+    },
   },
-  doctor: {
-    type: Types.ObjectId,
-    ref: 'Users'
-  },
-  patient: {
-    type: Types.ObjectId,
-    ref: 'Patients'
+  {
+    timestamps: true,
   }
-}, {
-  timestamps: true
-})
+);
 
-module.exports = model('Appointments', Appointments)
+module.exports = model('Appointments', Appointments);

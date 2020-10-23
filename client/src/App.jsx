@@ -1,21 +1,62 @@
-import React from 'react'
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import MainPage from "./pages/MainPage";
-import AppointmentPage from "./pages/AppointmentPage";
-import NavBar from "./components/NavBar";
-import LandingPage from "./pages/LandingPage";
+import React, { createContext } from 'react';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
+
+import MainPage from './MainPage/MainPage';
+import AppointmentPage from './AppointmentPage/AppointmentPage';
+import NavBar from './NavBar/NavBar';
+import LandingPage from './LandingPage/LandingPage';
+import { useAuth } from './hooks/auth.hook';
+import LoginPage from './LoginPage/LoginPage';
+import RegisterPage from './RegisterPage/RegisterPage';
+
+export const MainContext = createContext({});
 
 function App() {
+  const { token, login, logout } = useAuth();
+
+  if (!token) {
+    return (
+      <MainContext.Provider value={{ login }}>
+        <Router>
+          <Switch>
+            <Route exact path='/appointment/:id'>
+              <Redirect to='/login' />
+            </Route>
+            <Route exact path='/appointments'>
+              <Redirect to='/login' />
+            </Route>
+            <Route exact path='/' component={LandingPage} />
+            <Route path='/login' exact component={LoginPage} />
+            <Route path='/register' exact component={RegisterPage} />
+          </Switch>
+        </Router>
+      </MainContext.Provider>
+    );
+  }
+
   return (
-    <Router>
-      <NavBar />
-      <Switch>
-        <Route path='/appointments' exact component={MainPage} />
-        <Route path='/appointment/:id' component={AppointmentPage} />
-        <Route path='/' exact component={LandingPage} />
-      </Switch>
-    </Router>
+    <MainContext.Provider value={{ token, login, logout }}>
+      <Router>
+        <NavBar />
+        <Switch>
+          <Route path='/login'>
+            <Redirect to='/appointments' />
+          </Route>
+          <Route path='/register'>
+            <Redirect to='/appointments' />
+          </Route>
+          <Route path='/appointments' exact component={MainPage} />
+          <Route path='/appointment/:id' component={AppointmentPage} />
+          <Route path='/' exact component={LandingPage} />
+        </Switch>
+      </Router>
+    </MainContext.Provider>
   );
 }
 
-export default App
+export default App;

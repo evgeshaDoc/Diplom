@@ -1,0 +1,12 @@
+.main {
+  display: flex;
+  margin: 0 auto;
+  width: 80%;
+  max-height: 800px;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-addition {
+  width: 60%;
+}
