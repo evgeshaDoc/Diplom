@@ -12,13 +12,16 @@ const Patients = new Schema({
   patronymic: {
     type: String,
   },
+  dateOfBirth: {
+    type: Date,
+    required: true
+  },
   diagnoses: {
     items: [
       {
         diagnosisId: {
           type: Types.ObjectId,
           ref: 'Diagnoses',
-          required: true
         }
       }
     ]

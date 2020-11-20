@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 const { Users } = require('../models');
-const auth = require('../middleware/auth.middleware')
 
 const router = Router();
 
@@ -85,13 +84,22 @@ router.post(
           .status(401)
           .json({ message: 'Неверный пароль. Попробуйте снова' });
 
-      const token = jwt.sign(
-        { userId: candidate.id },
-        process.env.TOKEN_SECRET,
-        { expiresIn: '1h' }
-      );
+      if (candidate.isAdmin) {
+        const token = jwt.sign(
+          { userId: candidate.id, isAdmin: true },
+          process.env.TOKEN_SECRET,
+          { expiresIn: '12h' }
+        );
+      } else {
+        const token = jwt.sign(
+          { userId: candidate.id },
+          process.env.TOKEN_SECRET,
+          { expiresIn: '12h' }
+        );
+      }
+
       res.json({
-        token
+        token,
       });
     } catch (e) {
       res.status(500).json({
@@ -103,17 +111,17 @@ router.post(
 
 router.get('/', async (req, res) => {
   try {
-    const token = req.headers.authorization.split(' ')[1]
+    const token = req.headers.authorization.split(' ')[1];
 
-    if (!token) return res.status(401).json({message: "Вы не авторизованы"})
+    if (!token) return res.status(401).json({ message: 'Вы не авторизованы' });
 
-    req.user = await jwt.verify(token, process.env.TOKEN_SECRET)
+    req.user = await jwt.verify(token, process.env.TOKEN_SECRET);
     console.log(req.user);
   } catch (e) {
     res.status(500).json({
-      message: 'Что-то пошло не так, попробуйте снова'
-    })
+      message: 'Что-то пошло не так, попробуйте снова',
+    });
   }
-})
+});
 
 module.exports = router;

@@ -12,12 +12,16 @@ const Appointments = new Schema(
     },
     doctor: {
       type: Types.ObjectId,
-      ref: 'Users',
+      ref: 'Doctors',
     },
     patient: {
       type: Types.ObjectId,
       ref: 'Patients',
     },
+    hospital: {
+      type: Types.ObjectId,
+      ref: 'Hospital'
+    }
   },
   {
     timestamps: true,

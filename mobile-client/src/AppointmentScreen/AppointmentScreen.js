@@ -17,25 +17,23 @@ const AppointmentScreen = () => {
    * - Добавить модальное окно с добавлением расходников
    */
   return (
-    <AppointmentContext.Provider value={{ changeSum }}>
-      <View style={styles.container}>
-        <ScrollView>
-          <View style={styles.personalContainer}>
-            <Text style={styles.personalText}>{patient.surname}</Text>
-            <Text style={styles.personalText}> {patient.name}</Text>
-            {patient.patronymic && (
-              <Text style={styles.personalText}> {patient.patronymic}</Text>
-            )}
-          </View>
-          <View style={{ flexDirection: 'row', paddingHorizontal: 20 }}>
-            <Text style={{ color: 'rgba(161,161,161, 1)' }}>
-              {patient.time}
-            </Text>
-          </View>
-          <Table patient={patient} />
-        </ScrollView>
-      </View>
-    </AppointmentContext.Provider>
+    // <AppointmentContext.Provider value={{ changeSum }}>
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.personalContainer}>
+          <Text style={styles.personalText}>{patient.surname}</Text>
+          <Text style={styles.personalText}> {patient.name}</Text>
+          {patient.patronymic && (
+            <Text style={styles.personalText}> {patient.patronymic}</Text>
+          )}
+        </View>
+        <View style={{ flexDirection: 'row', paddingHorizontal: 20 }}>
+          <Text style={{ color: 'rgba(161,161,161, 1)' }}>{patient.time}</Text>
+        </View>
+        <Table patient={patient} />
+      </ScrollView>
+    </View>
+    // </AppointmentContext.Provider>
   );
 };
 

@@ -1,9 +1,11 @@
 const { Router } = require('express');
 const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth.middleware');
-const router = Router();
-
+const Doctor = require('../models/Users');
 const Appointments = require('../models/Appointments');
+const Patient = require('../models/Patients');
+const Hospitals = require('../models/Hostpitals');
+const router = Router();
 
 router.get('/', auth, async (req, res) => {
   try {
@@ -86,13 +88,14 @@ router.post('/:id/edit', auth, async (req, res) => {
 /* TODO
 - запись на прием
 - повторная запись
-- 
 */
 router.post(
   '/create',
   [
-    auth,
-    check(['name', 'surname'], 'Введите верные данные').isLength(3),
+    check(['name', 'surname', 'patronymic'], 'Введите верные данные').isLength(
+      3
+    ),
+    check('dateOfBirth', 'Выберите дату рождения').notEmpty(),
     check('hospital', 'Выберите больницу').notEmpty(),
     check('doctor', 'Выберите врача').notEmpty(),
     check('date', 'Выберите время приема').notEmpty(),
@@ -105,7 +108,35 @@ router.post(
         errors,
       });
     }
+
+    const { name, surname, patronymic, hospital, doctor, date } = req.body;
+    const patient = new Patient({
+      name,
+      surname,
+      patronymic,
+      dateOfBirth,
+    });
+    await patient.save();
+
+    const appointment = new Appointments({
+      dateOfAppointment: date,
+      doctor,
+      patient: patient._id,
+      hospital,
+    });
+    await appointment.save();
   }
 );
+
+router.get('/create', async (req, res) => {
+  const { hospital } = req.body;
+  const doctor = await Doctor.find({ hospital });
+  const hosp = await Hospitals.findById(hospital);
+  return res.json({ doctor, hosp });
+});
+
+router.get('/create/available', async (req, res) => {
+  const { date } = req.body;
+});
 
 module.exports = router;

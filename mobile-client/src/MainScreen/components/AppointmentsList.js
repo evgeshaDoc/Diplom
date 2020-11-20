@@ -30,7 +30,7 @@ const AppointmentsList = ({ item }) => {
           {item.diag && <Text>{item.diag}</Text>}
         </View>
       </View>
-      {item.price && <Text>{formatPrice(item.price)}</Text>}
+      {/* {item.price && <Text>{formatPrice(item.price)}</Text>} */}
       <AppointmentTime time={item.time} />
     </TouchableOpacity>
   );
