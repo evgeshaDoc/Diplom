@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import './styles/main.css';
 import 'materialize-css';
 import { useHttp } from '../hooks/http.hook';
@@ -8,10 +8,11 @@ import { useMessage } from '../hooks/message.hook';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
+  const [password, setPass] = useState('');
   const [errors, setErrors] = useState({});
   const history = useHistory();
-  const { request } = useHttp();
+  const location = useLocation();
+  const { request, loading } = useHttp();
   const { login } = useContext(MainContext);
   const message = useMessage();
 
@@ -32,33 +33,36 @@ const LoginPage = () => {
     const validate = text.length > 5;
     setPass(text);
     if (validate) {
-      setErrors((prevState) => delete prevState.pass);
+      setErrors((prevState) => delete prevState.password);
     } else {
       setErrors((prevState) => ({
         ...prevState,
-        pass: 'Длина пароля должна быть больше 5',
+        password: 'Длина пароля должна быть больше 5 символов',
       }));
     }
   };
 
   const handleSubmit = async (event) => {
-    const data = await request('/api/auth/login', 'post', {
-      email,
-      password: pass,
-    });
-    if (data.message) return message(data.message);
-    login(data.token);
-    history.push('/appointments');
+    event.preventDefault();
+
+    const res = await request('/api/auth/login', 'post', { email, password });
+
+    console.log(res);
+    if (res.message) return message(res.message);
+    login(res.token);
+    history.push('/login');
   };
 
   return (
     <>
       <div className='main'>
-        <div className='card blue-grey darken-1' style={{ width: '50%' }}>
+        <div className='card light-blue darken-1' style={{ width: '50%' }}>
           <div className='card-content white-text'>
             <span className='card-title'>Вход в аккаунт</span>
             <div className='input-field'>
-              <label htmlFor='email'>Email</label>
+              <label htmlFor='email' className='black-text'>
+                Email
+              </label>
               <input
                 name='email'
                 id='email'
@@ -66,28 +70,43 @@ const LoginPage = () => {
                 value={email}
                 inputMode='email'
                 onChange={(e) => checkEmail(e.target.value)}
+                autoFocus
+                className={!!errors.email ? 'not-valid' : null}
               />
+              <span className='helper-text' style={{ color: '#cc0000' }}>
+                {!!errors.email ? `${errors.email}` : null}
+              </span>
             </div>
             <div className='input-field'>
-              <label htmlFor='password'>Пароль</label>
+              <label htmlFor='password' className='black-text'>
+                Пароль
+              </label>
               <input
                 name='password'
                 id='password'
                 type='password'
-                value={pass}
+                value={password}
                 onChange={(e) => checkPass(e.target.value)}
+                className={!!errors.email ? 'not-valid' : null}
               />
+              <span className='helper-text' style={{ color: '#cc0000' }}>
+                {!!errors.password ? `${errors.password}` : null}
+              </span>
             </div>
           </div>
           <div className='card-action'>
             <button
-              disabled={!errors || !email || !pass}
+              disabled={!errors}
               className='btn btn-small green darken-1'
               onClick={handleSubmit}
             >
               Войти
             </button>
-            <a href='/register' style={{ marginLeft: 15 }}>
+            <a
+              href='/register'
+              style={{ marginLeft: 15 }}
+              className='black-text'
+            >
               Нет аккаунта? Зарегистрироваться
             </a>
           </div>

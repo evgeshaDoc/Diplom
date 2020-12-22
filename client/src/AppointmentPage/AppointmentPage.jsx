@@ -14,7 +14,7 @@ const AppointmentPage = () => {
     patronymic: '',
     city: '',
   });
-  const { request, loading, errors, cleatErrors } = useHttp();
+  const { request, loading, errors, clearErrors } = useHttp();
   const message = useMessage();
   const { id } = useParams();
 
@@ -47,34 +47,34 @@ const AppointmentPage = () => {
 
   useEffect(() => {
     message(errors);
-    cleatErrors();
-  }, [errors, cleatErrors, message]);
+    clearErrors();
+  }, [errors, clearErrors, message]);
 
   useEffect(() => {});
 
   return (
     <>
       <InputContext.Provider value={{ changeHandler, form }}>
-        <div className="container">
-          <form method="post" onSubmit={(e) => handleSubmit(e)}>
-            <div className="row">
-              <div className="col s6">
-                <InputPatient name="name" label="Имя" />
+        <div className='container'>
+          <form method='post' onSubmit={(e) => handleSubmit(e)}>
+            <div className='row'>
+              <div className='col s6'>
+                <InputPatient name='name' label='Имя' />
               </div>
-              <div className="col s6">
-                <InputPatient name="surname" label="Фамилия" />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col s6">
-                <InputPatient name="patronymic" label="Отчество" />
-              </div>
-              <div className="col s6">
-                <InputPatient name="city" label="Город" />
+              <div className='col s6'>
+                <InputPatient name='surname' label='Фамилия' />
               </div>
             </div>
-            <div className="button-container">
-              <button type="submit" className="btn" disabled={loading}>
+            <div className='row'>
+              <div className='col s6'>
+                <InputPatient name='patronymic' label='Отчество' />
+              </div>
+              <div className='col s6'>
+                <InputPatient name='city' label='Город' />
+              </div>
+            </div>
+            <div className='button-container'>
+              <button type='submit' className='btn' disabled={loading}>
                 Сохранить
               </button>
               {loading ? <LoaderLinear loading={loading} /> : null}

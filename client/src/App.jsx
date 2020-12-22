@@ -13,6 +13,7 @@ import LandingPage from './LandingPage/LandingPage';
 import { useAuth } from './hooks/auth.hook';
 import LoginPage from './LoginPage/LoginPage';
 import RegisterPage from './RegisterPage/RegisterPage';
+import NavBarUnreg from './NavBar/NavBarUnreg';
 
 export const MainContext = createContext({});
 
@@ -21,8 +22,9 @@ function App() {
 
   if (!token) {
     return (
-      <MainContext.Provider value={{ login }}>
+      <MainContext.Provider value={{ login, token }}>
         <Router>
+          <NavBarUnreg />
           <Switch>
             <Route exact path='/appointment/:id'>
               <Redirect to='/login' />

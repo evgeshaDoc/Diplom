@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { Router } = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -22,7 +23,7 @@ router.post(
       if (!errors.isEmpty())
         return res.status(402).json({
           errors: errors.array(),
-          message: 'Неверные данные при входе',
+          message: 'Допущены ошибки при заполнении формы',
         });
 
       const { email, password, name, surname, post, repeat } = req.body;
@@ -84,21 +85,13 @@ router.post(
           .status(401)
           .json({ message: 'Неверный пароль. Попробуйте снова' });
 
-      if (candidate.isAdmin) {
-        const token = jwt.sign(
-          { userId: candidate.id, isAdmin: true },
-          process.env.TOKEN_SECRET,
-          { expiresIn: '12h' }
-        );
-      } else {
-        const token = jwt.sign(
-          { userId: candidate.id },
-          process.env.TOKEN_SECRET,
-          { expiresIn: '12h' }
-        );
-      }
+      const token = jwt.sign(
+        { userId: candidate.id },
+        process.env.TOKEN_SECRET,
+        { expiresIn: '12h' }
+      );
 
-      res.json({
+      res.status(200).json({
         token,
       });
     } catch (e) {

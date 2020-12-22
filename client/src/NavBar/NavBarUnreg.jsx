@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import './styles/navbar.css';
 
-const NavBar = () => {
+const NavBarUnreg = () => {
   const location = useLocation();
   return (
     <nav>
@@ -12,12 +12,10 @@ const NavBar = () => {
         </a>
         <ul id='nav-mobile' className='right hide-on-med-and-down'>
           <li className={location.pathname === '/' ? 'active' : null}>
-            <a href='/'>На главную</a>
+            <a href='/'>О системе</a>
           </li>
-          <li
-            className={location.pathname === '/appointments' ? 'active' : null}
-          >
-            <a href='/appointments'>Приемы</a>
+          <li className={location.pathname === '/login' ? 'active' : null}>
+            <a href='/login'>Войти</a>
           </li>
         </ul>
       </div>
@@ -25,4 +23,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default NavBarUnreg;

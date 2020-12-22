@@ -20,10 +20,6 @@ const Users = new Schema({
     type: String,
     required: true,
   },
-  hospital: {
-    type: Types.ObjectId,
-    ref: 'Hospital',
-  },
 });
 
 module.exports = model('Doctors', Users);

@@ -29,42 +29,30 @@ router.get('/', auth, async (req, res) => {
 });
 
 router.get('/:id', auth, async (req, res) => {
-  const id = req.params.id;
-  const appointment = await Appointments.findById(id)
-    .populate('patient')
-    .populate('doctor')
-    .exec();
+  try {
+    const id = req.params.id;
+    const appointment = await Appointments.findById(id)
+      .populate('patient')
+      .populate('doctor')
+      .exec();
 
-  if (!appointment) {
-    res.status(404).json({
-      message: 'Не удалось найти данный прием',
-    });
+    if (!appointment) {
+      res.status(404).json({
+        message: 'Не удалось найти данный прием',
+      });
+    }
+    res.json({ appointment });
+  } catch (e) {
+    res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' });
   }
-  res.json({ appointment });
-});
-
-router.post('/:id', auth, async (req, res) => {
-  const { name, surname, patronymic, city } = req.body;
-
-  console.log(req.body);
-
-  setTimeout(() => {
-    res.status(202).json({
-      message: 'Запрос успешен',
-    });
-  }, 5000);
-  // res.status(202).json({
-  //   message: 'Запрос успешен'
-  // })
 });
 
 router.post('/:id/edit', auth, async (req, res) => {
-  const { id } = req.body;
-  delete req.body.id;
+  const id = req.params.id;
 
   const updatedAppointment = await Appointments.populate('doctor')
     .populate('patient')
-    .findOneAndUpdate({ _id: req.body.id }, { ...req.body });
+    .findOneAndUpdate({ _id: id }, { ...req.body });
 
   if (!updatedAppointment.ok) {
     return res.status(400).json({

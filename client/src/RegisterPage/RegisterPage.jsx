@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useMessage } from '../hooks/message.hook';
 import { useHttp } from '../hooks/http.hook';
+import './styles.css';
 
 const RegisterPage = () => {
   const [form, setForm] = useState({
@@ -46,7 +47,7 @@ const RegisterPage = () => {
       case 'repeat':
         const validateRepeat = value === form.password;
         setForm((prevState) => ({ ...prevState, repeat: value }));
-        if (!validatePass)
+        if (!validateRepeat)
           setFormErrors((prevState) => ({
             ...prevState,
             repeat: 'Пароли не совпадают',
@@ -74,35 +75,41 @@ const RegisterPage = () => {
         else setFormErrors((prevState) => delete prevState.surname);
         break;
       case 'post':
-        const validate = value;
+        const validate = value.length > 3;
         setForm((prevState) => ({ ...prevState, post: value }));
-        if (value === 'none')
+        if (!validate)
           setFormErrors((prevState) => ({
             ...prevState,
-            post: 'Выберите должность',
+            post: 'Введите должность',
           }));
         else setFormErrors((prevState) => delete prevState.post);
         break;
+      default:
+        return;
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (formErrors) return message('Форма заполнена неверно');
+    console.log(formErrors);
+    // if (formErrors) return message('Форма заполнена неверно');
     const res = await request('/api/auth/register', 'post', { ...form });
 
     if (res.errors) return message(res.errors);
     history.push('/login', { email: form.email });
   };
-
+  //TODO
+  // переделать поля ввода, вынести в отдельный кастомизируемый компонент
   return (
     <>
       <div className='main'>
-        <div className='card blue-grey darken-1' style={{ width: '50%' }}>
+        <div className='card blue lighten-2' style={{ width: '50%' }}>
           <div className='card-content white-text'>
             <span className='card-title'>Регистрация</span>
             <div className='input-field'>
-              <label htmlFor='email'>Email</label>
+              <label htmlFor='email' className='black-text'>
+                Email
+              </label>
               <input
                 name='email'
                 id='email'
@@ -110,67 +117,96 @@ const RegisterPage = () => {
                 value={form.email}
                 inputMode='email'
                 onChange={checkFields}
+                className={!!formErrors.email ? 'not-valid' : null}
               />
+              <span className='helper-text' style={{ color: '#cc0000' }}>
+                {!!formErrors.email ? `${formErrors.email}` : null}
+              </span>
             </div>
             <div className='input-field'>
-              <label htmlFor='password'>Пароль</label>
+              <label htmlFor='password' className='black-text'>
+                Пароль
+              </label>
               <input
                 name='password'
                 id='password'
                 type='password'
                 value={form.password}
                 onChange={checkFields}
+                className={!!formErrors.password ? 'not-valid' : null}
               />
+              <span className='helper-text' style={{ color: '#cc0000' }}>
+                {!!formErrors.password ? `${formErrors.password}` : null}
+              </span>
             </div>
             <div className='input-field'>
-              <label htmlFor='repeat'>Повторите пароль</label>
+              <label htmlFor='repeat' className='black-text'>
+                Повторите пароль
+              </label>
               <input
                 name='repeat'
                 id='repeat'
                 type='password'
                 value={form.repeat}
                 onChange={checkFields}
+                className={!!formErrors.repeat ? 'not-valid' : null}
               />
+              <span className='helper-text' style={{ color: '#cc0000' }}>
+                {!!formErrors.repeat ? `${formErrors.repeat}` : null}
+              </span>
             </div>
             <div className='input-field'>
-              <label htmlFor='name'>Имя</label>
+              <label htmlFor='name' className='black-text'>
+                Имя
+              </label>
               <input
                 name='name'
                 id='name'
                 type='text'
                 value={form.name}
                 onChange={checkFields}
+                className={!!formErrors.name ? 'not-valid' : null}
               />
+              <span className='helper-text' style={{ color: '#cc0000' }}>
+                {!!formErrors.name ? `${formErrors.name}` : null}
+              </span>
             </div>
             <div className='input-field'>
-              <label htmlFor='surname'>Фамилия</label>
+              <label htmlFor='surname' className='black-text'>
+                Фамилия
+              </label>
               <input
                 name='surname'
                 id='surname'
                 type='text'
                 value={form.surname}
                 onChange={checkFields}
+                className={!!formErrors.surname ? 'not-valid' : null}
               />
+              <span className='helper-text' style={{ color: '#cc0000' }}>
+                {!!formErrors.surname ? `${formErrors.surname}` : null}
+              </span>
             </div>
-            <div>
-              <select
+            <div className='input-field'>
+              <label htmlFor='post' className='black-text'>
+                Занимаемая должность
+              </label>
+              <input
                 name='post'
                 id='post'
+                type='text'
                 value={form.post}
                 onChange={checkFields}
-              >
-                <option value='none' selected disabled hidden>
-                  Выберите должность
-                </option>
-                <option value='1'></option>
-                <option value='2'>Option 2</option>
-                <option value='3'>Option 3</option>
-                <option value='4'>Option 4</option>
-              </select>
+                className={!!formErrors.email ? 'not-valid' : null}
+              />
+              <span className='helper-text' style={{ color: '#cc0000' }}>
+                {!!formErrors.post ? `${formErrors.post}` : null}
+              </span>
             </div>
             <div className='card-action'>
               <button
-                disabled={!errors}
+                // disabled={!formErrors}
+                disabled={false}
                 className='btn btn-small green darken-1'
                 onClick={handleSubmit}
               >
