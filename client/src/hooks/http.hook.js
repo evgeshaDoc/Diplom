@@ -16,11 +16,11 @@ export const useHttp = () => {
         const res = await fetch(url, { method, body, headers });
         const data = await res.json();
 
-        if (!res.ok) {
-          throw new Error(
-            data.message || 'Запрос не выполнен, повторите позже'
-          );
-        }
+        // if (!res.ok) {
+        //   throw new Error(
+        //     data.message || 'Запрос не выполнен, повторите позже'
+        //   );
+        // }
 
         setLoading(false);
         return data;

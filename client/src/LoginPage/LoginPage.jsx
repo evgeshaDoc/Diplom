@@ -13,7 +13,7 @@ const LoginPage = () => {
   const history = useHistory();
   const location = useLocation();
   const { request, loading } = useHttp();
-  const { login } = useContext(MainContext);
+  const { login, token } = useContext(MainContext);
   const message = useMessage();
 
   const checkEmail = (text) => {
@@ -50,8 +50,15 @@ const LoginPage = () => {
     console.log(res);
     if (res.message) return message(res.message);
     login(res.token);
-    history.push('/login');
+    history.push('/appointments');
   };
+
+  useEffect(() => {
+    if (token) {
+      login(token);
+      history.push('/appointments');
+    }
+  }, []);
 
   return (
     <>

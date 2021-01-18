@@ -11,9 +11,6 @@ const NavBar = () => {
           DCRM
         </a>
         <ul id='nav-mobile' className='right hide-on-med-and-down'>
-          <li className={location.pathname === '/' ? 'active' : null}>
-            <a href='/'>На главную</a>
-          </li>
           <li
             className={location.pathname === '/appointments' ? 'active' : null}
           >

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { AppointmentsContext } from '../AppointmentsContext';
 import { useHistory } from 'react-router-dom';
+import CustomModal from './Modal';
 
 const TableStructure = ({ appointment }) => {
   const { removeAppointment } = useContext(AppointmentsContext);
@@ -16,12 +17,7 @@ const TableStructure = ({ appointment }) => {
       <td onClick={() => handleClick(appointment.id)}>{appointment.date}</td>
       <td onClick={() => handleClick(appointment.id)}>{appointment.doctor}</td>
       <td>
-        <button
-          onClick={() => removeAppointment(appointment.id)}
-          className="btn-small red lighten-2"
-        >
-          Удалить
-        </button>
+        <CustomModal appointment={appointment} rm={removeAppointment} />
       </td>
     </tr>
   );
