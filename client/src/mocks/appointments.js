@@ -3,28 +3,72 @@ export const appointments = [
     id: 1,
     number: 1,
     fio: 'Иванов Петр Петрович',
+    name: 'Иванов',
+    surname: 'Петр',
+    patronymic: 'Петрович',
     date: '21.07.2019 11:00',
-    doctor: 'Басков Николай'
+    doctor: 'Басков Николай',
+    city: 'Тула',
+    cart: [
+      {
+        id: 532,
+        name: 'Ретрагель',
+        count: 1,
+        price: 453,
+      },
+      {
+        id: 777,
+        name: 'Citrix',
+        count: 2,
+        price: 1371,
+      },
+    ],
   },
   {
     id: 2,
     number: 2,
     fio: 'Сидоров Петр Петрович',
+    name: 'Сидоров',
+    surname: 'Петр',
+    patronymic: 'Петров',
     date: '19.07.2019 16:30',
-    doctor: 'Басков Николай'
+    doctor: 'Басков Николай',
+    city: 'Тула',
   },
   {
     id: 3,
     number: 3,
     fio: 'Некифоров Игнат Петрович',
+    name: 'Некифоров',
+    surname: 'Игнат',
+    patronymic: 'Петрович',
     date: '22.07.2019 12:30',
-    doctor: 'Филипп Киркоров'
+    doctor: 'Филипп Киркоров',
+    city: 'Тула',
+    cart: [
+      {
+        id: 532,
+        name: 'Ретрагель',
+        count: 1,
+        price: 453,
+      },
+      {
+        id: 777,
+        name: 'Citrix',
+        count: 2,
+        price: 1371,
+      },
+    ],
   },
   {
     id: 4,
     number: 4,
     fio: 'Котов Борис Аркадьевич',
+    name: 'Котов',
+    surname: 'Борис',
+    patronymic: 'Аркадьевич',
     date: '22.07.2019 16:30',
-    doctor: 'Филипп Киркоров'
+    doctor: 'Филипп Киркоров',
+    city: 'Тула',
   },
-]
+];
