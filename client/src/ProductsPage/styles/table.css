@@ -1,0 +1,16 @@
+.table-image-container {
+  width: 120px;
+  height: 90px;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-image {
+  width: 90%;
+  height: 80px;
+}
+
+.table-image:hover {
+  cursor: pointer;
+  box-shadow: 1px black;
+}

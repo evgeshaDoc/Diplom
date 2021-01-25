@@ -14,6 +14,7 @@ import { useAuth } from './hooks/auth.hook';
 import LoginPage from './LoginPage/LoginPage';
 import RegisterPage from './RegisterPage/RegisterPage';
 import NavBarUnreg from './NavBar/NavBarUnreg';
+import ProductsPage from './ProductsPage/ProductsPage';
 
 export const MainContext = createContext({});
 
@@ -59,9 +60,7 @@ function App() {
           <Route path='/register'>
             <Redirect to='/appointments' />
           </Route>
-          {/* <Route path='/'>
-            <Redirect to='/appointments' />
-          </Route> */}
+          <Route path='/products' exact component={ProductsPage} />
           <Route path='/appointments' exact component={MainPage} />
           <Route path='/appointment/:id' component={AppointmentPage} />
           <Route path='/' exact component={LandingPage} />

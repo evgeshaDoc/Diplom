@@ -16,6 +16,9 @@ const NavBar = () => {
           >
             <a href='/appointments'>Приемы</a>
           </li>
+          <li className={location.pathname === '/products' ? 'active' : null}>
+            <a href='/products'>Прайс-лист</a>
+          </li>
         </ul>
       </div>
     </nav>
