@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar/Sidebar';
 
 const ProductsPage = () => {
   return (
-    <>
+    <main>
       <div className='row'>
         <div className='col s12 m4 l3 screen-100'>
           <Sidebar />
@@ -15,7 +15,7 @@ const ProductsPage = () => {
           <ProdTable />
         </div>
       </div>
-    </>
+    </main>
   );
 };
 

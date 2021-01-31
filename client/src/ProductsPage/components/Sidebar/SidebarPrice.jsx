@@ -10,6 +10,8 @@ const SidebarPrice = () => {
       <span className='price-text'>Цена</span>
       <div className='input-container'>
         <input
+          type='number'
+          pattern='[0-9]'
           style={{ width: '40%' }}
           placeholder='от'
           value={fromPrice}
@@ -17,6 +19,8 @@ const SidebarPrice = () => {
         />
         <span> - </span>
         <input
+          type='number'
+          pattern='[0-9]'
           style={{ width: '40%' }}
           placeholder='до'
           value={toPrice}

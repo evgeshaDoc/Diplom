@@ -1,0 +1,23 @@
+.main-container {
+  margin-top: 20px;
+}
+
+.line {
+  display: flex;
+}
+
+.main-line {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-left: 80px;
+}
+
+.img-container {
+  width: 40%;
+}
+
+.more-container {
+  display: flex;
+  flex-direction: column;
+}

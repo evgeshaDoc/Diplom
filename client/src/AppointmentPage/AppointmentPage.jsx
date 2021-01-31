@@ -75,7 +75,7 @@ const AppointmentPage = () => {
   });
 
   return (
-    <>
+    <main>
       <InputContext.Provider value={{ changeHandler, form }}>
         <div className='container' style={{ marginTop: '20px' }}>
           <div className='row'>
@@ -114,7 +114,7 @@ const AppointmentPage = () => {
           </div>
         </div>
       </InputContext.Provider>
-    </>
+    </main>
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../styles/table.css';
 
 const products = [
@@ -36,12 +37,20 @@ const products = [
 
 const ProdTable = () => {
   const [prods, setProds] = useState([]);
+  const history = useHistory();
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('ru-RU', {
       currency: 'rub',
       style: 'currency',
     }).format(price);
+  };
+
+  const handleClick = (e, id) => {
+    const cellText = document.getSelection();
+    if (cellText.type === 'Range') return e.stopPropagation();
+
+    history.push(`/product/${id}`);
   };
 
   useEffect(() => {
@@ -61,7 +70,7 @@ const ProdTable = () => {
       </thead>
       <tbody>
         {prods.map((item) => (
-          <tr key={item.id}>
+          <tr key={item.id} onClick={(e) => handleClick(e, item.id)}>
             <td className='table-image-container'>
               <img src={item.picture} alt='Нет фото' className='table-image' />
             </td>
