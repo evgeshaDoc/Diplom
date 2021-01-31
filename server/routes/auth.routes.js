@@ -22,7 +22,7 @@ router.post(
       const errors = validationResult(req);
       if (!errors.isEmpty())
         return res.status(402).json({
-          errors: errors.array(),
+          // errors: errors.array(),
           message: 'Допущены ошибки при заполнении формы',
         });
 
@@ -66,11 +66,14 @@ router.post(
   async (req, res) => {
     try {
       const errors = validationResult(req);
-      if (!errors.isEmpty())
+      if (!errors.isEmpty()) {
+        console.log(errors);
+
         return res.status(402).json({
-          errors: errors.array(),
+          // errors: errors.array(),
           message: 'Неверные данные при входе',
         });
+      }
 
       const { email, password } = req.body;
       const candidate = await Users.findOne({ email });

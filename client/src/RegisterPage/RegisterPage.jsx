@@ -95,7 +95,7 @@ const RegisterPage = () => {
     // if (formErrors) return message('Форма заполнена неверно');
     const res = await request('/api/auth/register', 'post', { ...form });
 
-    if (res.errors) return message(res.errors);
+    if (res.message) return message(res.message);
     history.push('/login', { email: form.email });
   };
   //TODO
