@@ -1,4 +1,4 @@
-const { model, Schema, Types } = require('mongoose');
+const { model, Schema } = require('mongoose');
 
 const Products = new Schema({
   name: {
@@ -17,6 +17,17 @@ const Products = new Schema({
     required: true,
   },
   picture: {
+    type: String,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  specialty: {
+    type: String,
+    required: true,
+  },
+  description: {
     type: String,
   },
 });

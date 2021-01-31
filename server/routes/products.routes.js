@@ -1,21 +1,19 @@
 const { Router } = require('express');
 const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth.middleware');
-const isAdmin = require('../middleware/isAdmin.middleware');
+// const isAdmin = require('../middleware/isAdmin.middleware');
 const Products = require('../models/Products');
 
 const router = Router();
 
 router.get('/', auth, async (req, res) => {
   try {
-    const { priceMax, priceMin, name, article, orderBy } = req.body;
+    const { priceMax, priceMin, orderBy } = req.body;
 
     const query = {};
     if (orderBy) query.sort(orderBy);
     if (priceMax) query.price = { $lte: +priceMax };
     if (priceMin) query.price = { ...query.price, $gte: +priceMin };
-    if (name) query.name = name;
-    if (article) query.article = article;
 
     const products = await Products.find(query);
 
@@ -35,7 +33,7 @@ router.get('/:id', auth, async (req, res) => {
 router.post(
   '/create',
   [
-    isAdmin,
+    // isAdmin,
     check('name', 'Введите название товара').notEmpty(),
     check('price', 'Введите цену товара').notEmpty(),
     check('remains', 'Введите остаток по товарам').notEmpty(),
@@ -66,7 +64,7 @@ router.post(
 router.put(
   '/:id',
   [
-    isAdmin,
+    // isAdmin,
     check('name', 'Название не должно быть пустым').notEmpty(),
     check('price', 'Введите цену товара').notEmpty(),
     check('remains', 'Введите остаток по товарам').notEmpty(),
