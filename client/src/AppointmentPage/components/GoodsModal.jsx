@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
+
 import ProdTable from '../../ProductsPage/components/ProdTable';
 import Sidebar from '../../ProductsPage/components/Sidebar/Sidebar';
 
@@ -18,7 +19,9 @@ class GoodsModal extends Component {
     const options = {
       onOpenStart: null,
       onOpenEnd: null,
+
       onCloseStart: this.handleClose,
+
       onCloseEnd: null,
       inDuration: 250,
       outDuration: 250,
@@ -27,6 +30,7 @@ class GoodsModal extends Component {
       startingTop: '4%',
       endingTop: '10%',
     };
+
     M.Modal.init(this.GoodsModal, options);
   }
 
@@ -54,6 +58,7 @@ class GoodsModal extends Component {
         </div>
 
         <div
+
           ref={(GoodsModal) => {
             this.GoodsModal = GoodsModal;
           }}
@@ -86,6 +91,7 @@ class GoodsModal extends Component {
               <Sidebar />
             </div>
             <ProdTable modal={true} />
+
           </div>
           <div className='modal-footer'>
             <button

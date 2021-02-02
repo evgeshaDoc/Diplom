@@ -6,7 +6,9 @@ const SidebarCategory = () => {
     <div className='select-container'>
       <span>Категории</span>
       <select value={select} onChange={(e) => setSelect(e.target.value)}>
+
         <option value='0' defaultValue disabled>
+
           Выберите вариант
         </option>
         <option value='1'>Услуги</option>
