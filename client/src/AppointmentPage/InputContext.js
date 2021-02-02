@@ -1,6 +1,7 @@
-import {createContext} from "react";
+import { createContext } from 'react';
 
 export const InputContext = createContext({
-  changeHandler: null,
-  form: {}
-})
+  changeHandler: function () {},
+  form: {},
+  addToCart: function (product) {},
+});

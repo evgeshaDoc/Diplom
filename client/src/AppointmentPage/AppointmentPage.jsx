@@ -6,9 +6,9 @@ import InputPatient from './components/InputPatient';
 import { useHttp } from '../hooks/http.hook';
 import { useMessage } from '../hooks/message.hook';
 import { InputContext } from './InputContext';
-import LoaderLinear from './components/LoaderLinear';
 import { appointments as mock } from '../mocks/appointments';
 import GoodsTable from './components/GoodsTable';
+import LoaderCircular from './components/LoaderLinear';
 
 const AppointmentPage = () => {
   const [form, setForm] = useState({
@@ -61,6 +61,31 @@ const AppointmentPage = () => {
   const changeHandler = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
+  const smoothScroll = () => {
+    window.scroll({ top: 0 });
+    message('Изменения успешно сохранены');
+  };
+
+  const addToCart = async (product) => {
+    const candidate = form.cart.findIndex((item) => product.id === item.id);
+
+    if (candidate > -1) {
+      return message('Уже добавлено');
+    } else {
+      setForm((prevState) => {
+        const newItem = {
+          id: product.id,
+          name: product.name,
+          count: 1,
+          price: product.price,
+        };
+        const cart = [...prevState.cart, newItem];
+
+        return { ...prevState, cart };
+      });
+    }
+  };
+
   useEffect(() => {
     message(errors);
     clearErrors();
@@ -68,7 +93,7 @@ const AppointmentPage = () => {
 
   useEffect(() => {
     setForm(mock[id - 1]);
-  }, [setForm, id, form]);
+  }, []);
 
   useEffect(() => {
     window.M.updateTextFields();
@@ -76,7 +101,7 @@ const AppointmentPage = () => {
 
   return (
     <main>
-      <InputContext.Provider value={{ changeHandler, form }}>
+      <InputContext.Provider value={{ changeHandler, form, addToCart }}>
         <div className='container' style={{ marginTop: '20px' }}>
           <div className='row'>
             <div className='col s6'>
@@ -97,17 +122,9 @@ const AppointmentPage = () => {
           <GoodsTable />
           <div>
             {loading ? (
-              <LoaderLinear loading={loading} />
+              <LoaderCircular loading={loading} />
             ) : (
-              <button
-                className='btn'
-                onClick={() =>
-                  window.scroll({
-                    top: 0,
-                    behavior: 'smooth',
-                  })
-                }
-              >
+              <button className='btn' onClick={smoothScroll}>
                 Сохранить
               </button>
             )}

@@ -68,7 +68,7 @@ function App() {
           <Route path='/appointment/:id' component={AppointmentPage} />
           <Route path='/' exact component={LandingPage} />
         </Switch>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </MainContext.Provider>
   );

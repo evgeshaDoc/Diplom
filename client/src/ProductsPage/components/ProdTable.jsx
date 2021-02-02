@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../styles/table.css';
+import { InputContext } from '../../AppointmentPage/InputContext';
 
 const products = [
   {
@@ -35,9 +36,10 @@ const products = [
   },
 ];
 
-const ProdTable = () => {
+const ProdTable = ({ modal }) => {
   const [prods, setProds] = useState([]);
   const history = useHistory();
+  const { addToCart } = useContext(InputContext);
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('ru-RU', {
@@ -70,7 +72,12 @@ const ProdTable = () => {
       </thead>
       <tbody>
         {prods.map((item) => (
-          <tr key={item.id} onClick={(e) => handleClick(e, item.id)}>
+          <tr
+            key={item.id}
+            onClick={
+              modal ? () => addToCart(item) : (e) => handleClick(e, item.id)
+            }
+          >
             <td className='table-image-container'>
               <img src={item.picture} alt='Нет фото' className='table-image' />
             </td>
