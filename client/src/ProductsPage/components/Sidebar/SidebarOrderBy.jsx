@@ -6,7 +6,9 @@ const SidebarOrderBy = () => {
     <div className='select-container'>
       <span>Соритровать</span>
       <select value={select} onChange={(e) => setSelect(e.target.value)}>
-        <option value='0' selected disabled>
+
+        <option value='0' defaultValue disabled>
+
           Выберите вариант
         </option>
         <option value='1'>По алфавиту (по возр.)</option>

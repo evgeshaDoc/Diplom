@@ -2,12 +2,26 @@ import React, { Component } from 'react';
 import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 
+import ProdTable from '../../ProductsPage/components/ProdTable';
+import Sidebar from '../../ProductsPage/components/Sidebar/Sidebar';
+
 class GoodsModal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showFilters: false,
+    };
+    this.handleFilters = this.handleFilters.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
   componentDidMount() {
     const options = {
       onOpenStart: null,
       onOpenEnd: null,
-      onCloseStart: null,
+
+      onCloseStart: this.handleClose,
+
       onCloseEnd: null,
       inDuration: 250,
       outDuration: 250,
@@ -16,8 +30,17 @@ class GoodsModal extends Component {
       startingTop: '4%',
       endingTop: '10%',
     };
-    M.Modal.init(this.Modal, options);
+
+    M.Modal.init(this.GoodsModal, options);
   }
+
+  handleFilters = () => {
+    this.setState({ showFilters: !this.state.showFilters });
+  };
+
+  handleClose = () => {
+    this.setState({ showFilters: false });
+  };
 
   render() {
     return (
@@ -35,15 +58,40 @@ class GoodsModal extends Component {
         </div>
 
         <div
-          ref={(Modal) => {
-            this.Modal = Modal;
+
+          ref={(GoodsModal) => {
+            this.GoodsModal = GoodsModal;
           }}
           id='modal1'
-          className='modal'
+          className='modal modal-fixed-footer'
         >
           <div className='modal-content'>
-            <h4>Добавление</h4>
-            <p>Удалить этот прием?</p>
+            <div
+              style={{
+                width: '100%',
+                background: '#bdbdbd',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+                height: 32,
+              }}
+              className='waves-effect'
+              onClick={this.handleFilters}
+            >
+              {this.state.showFilters ? 'Скрыть фильтры' : 'Фильтры'}
+            </div>
+            <div
+              style={
+                this.state.showFilters
+                  ? { display: 'flex', width: '100%' }
+                  : { display: 'none' }
+              }
+            >
+              <Sidebar />
+            </div>
+            <ProdTable modal={true} />
+
           </div>
           <div className='modal-footer'>
             <button
