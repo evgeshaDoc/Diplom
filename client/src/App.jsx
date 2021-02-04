@@ -69,8 +69,7 @@ function App() {
           <Route path='/' exact component={LandingPage} />
         </Switch>
 
-        {/* <Footer /> */}
-
+        <Footer />
       </Router>
     </MainContext.Provider>
   );

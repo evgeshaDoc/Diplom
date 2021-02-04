@@ -23,10 +23,6 @@ const Products = new Schema({
     type: String,
     required: true,
   },
-  specialty: {
-    type: String,
-    required: true,
-  },
   description: {
     type: String,
   },

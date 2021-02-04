@@ -41,20 +41,24 @@ router.post(
   async (req, res) => {
     try {
       const errors = validationResult(req);
-      if (errors) {
+      if (!errors.isEmpty()) {
         return res.status(500).json({
           message: 'Заполните все поля',
           errors,
         });
       }
-      const { name, price, remains } = req.body;
+      const { name } = req.body;
 
-      const productCandidate = Products.find({ name });
-      if (productCandidate)
-        return res.json({ message: 'Такой товар уже существует' });
+      const productCandidate = await Products.find({ name });
+      if (productCandidate.length > 0)
+        return res.json({
+          message: 'Такой товар уже существует',
+          productCandidate,
+        });
 
       const product = new Products({ ...req.body });
-      res.json({ message: 'Товар был успешно добавлен' });
+      await product.save();
+      res.json({ message: 'Товар был успешно добавлен', product });
     } catch (e) {
       res.status(500).json({ message: 'Произошла ошибка, попробуйте позднее' });
     }
@@ -79,11 +83,11 @@ router.put(
         });
       }
 
-      const candidiate = Products.findById(req.params.id);
+      const candidiate = await Products.findById(req.params.id);
       if (!candidiate)
         return res.status(404).json({ message: 'Такого товара не существует' });
 
-      const updatedProduct = Products.findByIdAndUpdate(
+      const updatedProduct = await Products.findByIdAndUpdate(
         { _id: req.params.id },
         { ...req.body }
       );

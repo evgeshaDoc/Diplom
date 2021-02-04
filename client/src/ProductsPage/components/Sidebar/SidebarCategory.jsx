@@ -17,6 +17,7 @@ const SidebarCategory = () => {
         <option value='4'>Пародонтия</option>
         <option value='5'>Детская стоматология</option>
         <option value='6'>Ортопедия</option>
+	<option value='7'>Общее</option>
       </select>
     </div>
   );

@@ -7,7 +7,7 @@ const ProductsPage = () => {
   return (
     <main>
       <div className='row'>
-        <div className='col s12 m4 l3 screen-100'>
+        <div className='col s12 m4 l3'>
           <Sidebar />
         </div>
 

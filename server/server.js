@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const appointmentsRoutes = require('./routes/appointments.routes');
 const authRoutes = require('./routes/auth.routes');
+const productRoutes = require('./routes/products.routes');
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/appointments', appointmentsRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
 
 async function start() {
   try {

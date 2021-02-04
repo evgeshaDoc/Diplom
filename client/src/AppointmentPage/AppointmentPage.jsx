@@ -93,7 +93,6 @@ const AppointmentPage = () => {
 
   useEffect(() => {
     setForm(mock[id - 1]);
-
   }, []);
 
   useEffect(() => {
@@ -102,9 +101,7 @@ const AppointmentPage = () => {
 
   return (
     <main>
-
       <InputContext.Provider value={{ changeHandler, form, addToCart }}>
-
         <div className='container' style={{ marginTop: '20px' }}>
           <div className='row'>
             <div className='col s6'>
@@ -125,11 +122,9 @@ const AppointmentPage = () => {
           <GoodsTable />
           <div>
             {loading ? (
-
               <LoaderCircular loading={loading} />
             ) : (
               <button className='btn' onClick={smoothScroll}>
-
                 Сохранить
               </button>
             )}
