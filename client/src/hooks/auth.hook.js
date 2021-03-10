@@ -24,7 +24,7 @@ export const useAuth = () => {
 
   // Логин пользователя, если в localStorage уже есть нужные данные
   useEffect(() => {
-    const data = localStorage.getItem(storage);
+    const data = JSON.parse(localStorage.getItem(storage));
 
     if (data && data.token) {
       login(data.token);

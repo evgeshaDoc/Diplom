@@ -1,7 +1,6 @@
-.body {
-  margin-left: .5rem;
-}
-
-.body-hidden {
-  display: none;
+.position {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

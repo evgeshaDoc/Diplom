@@ -6,8 +6,17 @@ import TableContent from './TableContent';
 import AppointmentContext from '../AppointmentContext';
 
 const Table = ({ patient }) => {
+  if (!patient.cart)
+    return (
+      <View style={styles.noGoodsContainer}>
+        <Text style={styles.noGoodsText}>Расходников не добавлено</Text>
+        <View style={styles.noGoodsButtonContainer}>
+          <Text style={styles.noGoodsButtonText}>Добавить</Text>
+        </View>
+      </View>
+    );
   return (
-    <>
+    <View>
       <View style={styles.tableTitleContainer}>
         <Text style={styles.tableTitleText}>Оказанные услуги</Text>
       </View>
@@ -28,10 +37,9 @@ const Table = ({ patient }) => {
         ))}
       </View>
       <View style={styles.iconContainer}>
-        <FontAwesome5 name="plus-circle" size={32} color="#c3c8cf" />
-        <Text></Text>
+        <FontAwesome5 name='plus-circle' size={32} color='#c3c8cf' />
       </View>
-    </>
+    </View>
   );
 };
 
@@ -72,4 +80,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 15,
   },
+  noGoodsContainer: {
+    flexDirection: 'column',
+    paddingHorizontal: 20,
+    marginTop: 15,
+  },
+  noGoodsText: {
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  noGoodsButtonContainer: {
+    backgroundColor: '#0a6aff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    width: 100,
+    height: 40,
+  },
+  noGoodsButtonText: { color: '#fff', fontWeight: '600', fontSize: 16 },
 });

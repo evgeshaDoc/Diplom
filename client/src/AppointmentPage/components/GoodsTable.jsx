@@ -6,20 +6,21 @@ import { InputContext } from '../InputContext';
 import GoodsModal from './GoodsModal';
 
 const GoodsTable = () => {
-  const [goods, setGoods] = useState([]);
+  const [test, setTest] = useState(0);
   const { form } = useContext(InputContext);
 
   useEffect(() => {
-    setGoods(form.cart);
-  }, [setGoods, form.cart]);
+    console.log(form.cart.length);
+    setTest((prevState) => prevState + 1);
+  }, [form]);
 
-  if (goods.length === 0)
-    return (
-      <div className='row'>
-        <h5>Расходников не добавлено</h5>
-        <button className='btn btn-small blue darken-2'>Добавить</button>
-      </div>
-    );
+  // if (!form.cart.lenght)
+  //   return (
+  //     <div className='row'>
+  //       <h5>Расходников не добавлено</h5>
+  //       <GoodsModal />
+  //     </div>
+  //   );
 
   return (
     <>
@@ -32,8 +33,8 @@ const GoodsTable = () => {
           </tr>
         </thead>
         <tbody>
-          {goods.map((item) => (
-            <TableContent key={item.id} item={item} />
+          {form.cart.map((item) => (
+            <TableContent key={item._id} item={item} />
           ))}
         </tbody>
       </table>

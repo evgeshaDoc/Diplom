@@ -1,17 +1,54 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, ScrollView, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 import Table from './components/Table';
 import AppointmentContext from './AppointmentContext';
+import { useHttp } from '../hooks/http.hook';
 
-const AppointmentScreen = () => {
-  const [sum, setSum] = useState(0);
+const AppointmentScreen = ({ id }) => {
+  const [appointment, setAppointment] = useState({});
   const navigation = useNavigation();
   const route = useRoute();
-  const { patient } = route.params;
+  const { request, loading } = useHttp();
 
-  const changeSum = (price) => setSum((prevState) => prevState + price);
+  const handleInitLoad = async (id) => {
+    try {
+      const data = await request(`/api/appointment/${id}`, 'get');
+      if (data.message) return;
+
+      setAppointment(data.appointment);
+    } catch (e) {}
+  };
+
+  const addToCart = (item) => {
+    const candidate = appointment.cart.findIndex((val) => val._id === item._id);
+    if (candidate > -1) {
+      return 'Уже добавлено';
+    }
+    setAppointment((prevState) => {
+      const newCart = [...prevState.cart, item];
+      return {
+        ...prevState,
+        cart: newCart,
+      };
+    });
+  };
+
+  const removeFromCart = (itemId) => {
+    setAppointment((prevState) => {
+      const newCart = prevState.cart.map((val) => val._id !== itemId);
+
+      return {
+        ...prevState,
+        cart: newCart,
+      };
+    });
+  };
+
+  useEffect(() => {
+    handleInitLoad(id);
+  });
   /* TODO
    * - Починить контекст
    * - Добавить модальное окно с добавлением расходников
@@ -21,16 +58,24 @@ const AppointmentScreen = () => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.personalContainer}>
-          <Text style={styles.personalText}>{patient.surname}</Text>
-          <Text style={styles.personalText}> {patient.name}</Text>
-          {patient.patronymic && (
-            <Text style={styles.personalText}> {patient.patronymic}</Text>
+          <Text style={styles.personalText}>{appointment.patient.surname}</Text>
+          <Text style={styles.personalText}> {appointment.patient.name}</Text>
+          {appointment.patient.patronymic && (
+            <Text style={styles.personalText}>
+              {' ' + appointment.patient.patronymic}
+            </Text>
           )}
         </View>
         <View style={{ flexDirection: 'row', paddingHorizontal: 20 }}>
-          <Text style={{ color: 'rgba(161,161,161, 1)' }}>{patient.time}</Text>
+          <Text style={{ color: 'rgba(161,161,161, 1)' }}>
+            {appointment.time.length > 1
+              ? `${appointment.time[0]} - ${
+                  appointment.time[appointment.time.letgth - 1]
+                }`
+              : `${appointment.time[0]}`}
+          </Text>
         </View>
-        <Table patient={patient} />
+        <Table patient={appointment} />
       </ScrollView>
     </View>
     // </AppointmentContext.Provider>

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import 'materialize-css';
+import { InputContext } from '../InputContext';
 
 const TableContent = ({ item }) => {
-  const [count, setCount] = useState('');
-  const [price, setPrice] = useState('');
+  const { cartCountChange } = useContext(InputContext);
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('ru-RU', {
@@ -12,28 +12,22 @@ const TableContent = ({ item }) => {
     }).format(price);
   };
 
-  useEffect(() => {
-    setCount(`${item.count}`);
-    setPrice(`${item.price * item.count}`);
-  }, [item]);
-
-  useEffect(() => {
-    setPrice(`${count * item.price}`);
-  }, [count, item]);
-
   return (
     <>
       <tr>
         <td>{item.name}</td>
         <td>
           <input
-            value={count}
+            name={`${item._id}`}
+            value={`${item.count}`}
             className='browser-default'
-            onChange={(e) => setCount(e.target.value)}
+            onChange={(e) => {
+              cartCountChange(e, item);
+            }}
             style={{ width: '25px', textAlign: 'center' }}
           />
         </td>
-        <td>{formatPrice(price)}</td>
+        <td>{formatPrice(item.sum)}</td>
       </tr>
     </>
   );

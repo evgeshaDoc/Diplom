@@ -17,6 +17,7 @@ import NavBarUnreg from './NavBar/NavBarUnreg';
 import ProductsPage from './ProductsPage/ProductsPage';
 import ProductPage from './ProductPage/ProductPage';
 import Footer from './Footer';
+import RecPage from './RecPage/RecPage';
 
 export const MainContext = createContext({});
 
@@ -26,30 +27,30 @@ function App() {
   // useEffect(() => {
   //   const data = localStorage.getItem('userStorage');
   //   if (data) login(data);
-  // }, [login]);
+  // }, []);
 
-  // if (!token) {
-  //   return (
-  //     <MainContext.Provider value={{ login, token }}>
-  //       <Router>
-  //         <NavBarUnreg />
-  //         <Switch>
-  //           <Route exact path='/appointment/:id'>
-  //             <Redirect to='/login' />
-  //           </Route>
-  //           <Route exact path='/appointments'>
-  //             <Redirect to='/login' />
-  //           </Route>
-  //           <Route exact path='/'>
-  //             <Redirect to='/login' />
-  //           </Route>
-  //           <Route path='/login' exact component={LoginPage} />
-  //           <Route path='/register' exact component={RegisterPage} />
-  //         </Switch>
-  //       </Router>
-  //     </MainContext.Provider>
-  //   );
-  // }
+  if (!token) {
+    return (
+      <MainContext.Provider value={{ login, token }}>
+        <Router>
+          <NavBarUnreg />
+          <Switch>
+            <Route exact path='/appointment/:id'>
+              <Redirect to='/login' />
+            </Route>
+            <Route exact path='/appointments'>
+              <Redirect to='/login' />
+            </Route>
+            <Route exact path='/'>
+              <Redirect to='/login' />
+            </Route>
+            <Route path='/login' exact component={LoginPage} />
+            <Route path='/register' exact component={RegisterPage} />
+          </Switch>
+        </Router>
+      </MainContext.Provider>
+    );
+  }
 
   return (
     <MainContext.Provider value={{ token, login, logout }}>
@@ -67,6 +68,7 @@ function App() {
           <Route path='/appointments' exact component={MainPage} />
           <Route path='/appointment/:id' component={AppointmentPage} />
           <Route path='/' exact component={LandingPage} />
+          <Route path='/rec' exact component={RecPage} />
         </Switch>
 
         <Footer />

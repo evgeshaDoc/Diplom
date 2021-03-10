@@ -5,6 +5,7 @@ import 'materialize-css';
 import { useHttp } from '../hooks/http.hook';
 import { MainContext } from '../App';
 import { useMessage } from '../hooks/message.hook';
+import LoaderCircular from '../AppointmentPage/components/LoaderLinear';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -102,13 +103,29 @@ const LoginPage = () => {
             </div>
           </div>
           <div className='card-action'>
-            <button
-              disabled={!errors}
-              className='btn btn-small green darken-1'
-              onClick={handleSubmit}
-            >
-              Войти
-            </button>
+            {loading ? (
+              <div className='preloader-wrapper large active'>
+                <div className='spinner-layer spinner-blue-only'>
+                  <div className='circle-clipper left'>
+                    <div className='circle' />
+                  </div>
+                  <div className='gap-patch'>
+                    <div className='circle' />
+                  </div>
+                  <div className='circle-clipper right'>
+                    <div className='circle' />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <button
+                disabled={!errors}
+                className='btn btn-small green darken-1'
+                onClick={handleSubmit}
+              >
+                Войти
+              </button>
+            )}
             <a
               href='/register'
               style={{ marginLeft: 15 }}

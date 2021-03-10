@@ -23,6 +23,7 @@ async function start() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
+      useFindAndModify: false,
     });
     app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
   } catch (e) {
@@ -30,4 +31,4 @@ async function start() {
   }
 }
 
-start().catch((e) => console.log(e.message));
+start();

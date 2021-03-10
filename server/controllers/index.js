@@ -1,5 +1,4 @@
-const AppointmentsController = require('./AppointmentController')
+const ProductsController = require('./ProductsController');
+const AppointmentsController = require('./AppointmentController');
 
-export {
-  AppointmentsController
-}
+module.exports = { AppointmentsController, ProductsController };

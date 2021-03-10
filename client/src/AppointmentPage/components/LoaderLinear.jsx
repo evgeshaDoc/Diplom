@@ -2,13 +2,13 @@ import React from 'react';
 import '../styles/loader-styles.css';
 import 'materialize-css';
 
-const LoaderCircular = ({ loading }) => {
+const LoaderCircular = () => {
   return (
-    <div className={loading ? 'body' : 'body-hidden'}>
+    <div className='position'>
       {/*<div className="progress">*/}
       {/*  <div className="indeterminate"/>*/}
       {/*</div>*/}
-      <div className='preloader-wrapper small active'>
+      <div className='preloader-wrapper large active'>
         <div className='spinner-layer spinner-blue-only'>
           <div className='circle-clipper left'>
             <div className='circle' />

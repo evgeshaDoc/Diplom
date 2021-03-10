@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useMessage } from '../../../hooks/message.hook';
+import { ProductsContext } from '../../ProductsContext';
 import '../../styles/sidebar.css';
 
 const SidebarSearch = () => {
   const [search, setSearch] = useState('');
   const message = useMessage();
+  const { filters, changeFilters } = useContext(ProductsContext);
 
   const searchInPriceList = () => {
     if (search.length === 0)
@@ -20,9 +22,10 @@ const SidebarSearch = () => {
   return (
     <div className='search-container'>
       <input
+        name='search'
         placeholder='Поиск'
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={filters.search}
+        onChange={changeFilters}
         onKeyDown={enterPressed}
       />
       <svg

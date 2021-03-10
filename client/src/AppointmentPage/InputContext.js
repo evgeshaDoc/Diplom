@@ -2,6 +2,8 @@ import { createContext } from 'react';
 
 export const InputContext = createContext({
   changeHandler: function () {},
-  form: {},
+  form: {
+    cart: [],
+  },
   addToCart: function (product) {},
 });

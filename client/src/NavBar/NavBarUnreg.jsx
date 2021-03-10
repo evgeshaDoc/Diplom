@@ -11,6 +11,9 @@ const NavBarUnreg = () => {
           DCRM
         </a>
         <ul id='nav-mobile' className='right hide-on-med-and-down'>
+          <li className={location.pathname === '/rec' ? 'active' : null}>
+            <a href='/rec'>Записаться</a>
+          </li>
           <li className={location.pathname === '/login' ? 'active' : null}>
             <a href='/login'>Войти</a>
           </li>

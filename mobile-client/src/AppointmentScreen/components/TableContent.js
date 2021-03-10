@@ -30,7 +30,7 @@ const TableContent = ({ item }) => {
         <TextInput
           value={count}
           onChangeText={(text) => setCount(text)}
-          keyboardType="decimal-pad"
+          keyboardType='decimal-pad'
           defaultValue={`${item.count}`}
           textAlign={'center'}
           style={styles.inputStyle}

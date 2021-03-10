@@ -4,6 +4,7 @@ import 'materialize-css/dist/css/materialize.min.css';
 
 import ProdTable from '../../ProductsPage/components/ProdTable';
 import Sidebar from '../../ProductsPage/components/Sidebar/Sidebar';
+import ProductsPage from '../../ProductsPage/ProductsPage';
 
 class GoodsModal extends Component {
   constructor(props) {
@@ -58,7 +59,6 @@ class GoodsModal extends Component {
         </div>
 
         <div
-
           ref={(GoodsModal) => {
             this.GoodsModal = GoodsModal;
           }}
@@ -66,32 +66,7 @@ class GoodsModal extends Component {
           className='modal modal-fixed-footer'
         >
           <div className='modal-content'>
-            <div
-              style={{
-                width: '100%',
-                background: '#bdbdbd',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 10,
-                height: 32,
-              }}
-              className='waves-effect'
-              onClick={this.handleFilters}
-            >
-              {this.state.showFilters ? 'Скрыть фильтры' : 'Фильтры'}
-            </div>
-            <div
-              style={
-                this.state.showFilters
-                  ? { display: 'flex', width: '100%' }
-                  : { display: 'none' }
-              }
-            >
-              <Sidebar />
-            </div>
-            <ProdTable modal={true} />
-
+            <ProductsPage modal={true} />
           </div>
           <div className='modal-footer'>
             <button

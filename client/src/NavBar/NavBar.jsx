@@ -1,9 +1,11 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import { useAuth } from '../hooks/auth.hook';
 import './styles/navbar.css';
 
 const NavBar = () => {
   const location = useLocation();
+  const { logout } = useAuth();
   return (
     <header>
       <nav>
@@ -21,6 +23,14 @@ const NavBar = () => {
             </li>
             <li className={location.pathname === '/products' ? 'active' : null}>
               <a href='/products'>Прайс-лист</a>
+            </li>
+            <li className={location.pathname === '/rec' ? 'active' : null}>
+              <a href='/rec'>Назначить прием</a>
+            </li>
+            <li>
+              <a href='/logout' onClick={logout}>
+                Выйти
+              </a>
             </li>
           </ul>
         </div>

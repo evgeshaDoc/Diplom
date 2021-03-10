@@ -14,17 +14,21 @@ const TableStructure = ({ appointment }) => {
     history.push(`/appointment/${id}`);
   };
 
+  const formatFIO = (user) => {
+    return `${user.surname} ${user.name} ${user.patronymic}`;
+  };
+
   return (
     <tr>
-      <td onClick={(e) => handleClick(e, appointment.id)}>
-        {appointment.number}
+      <td onClick={(e) => handleClick(e, appointment._id)}>
+        {formatFIO(appointment.patient)}
       </td>
-      <td onClick={(e) => handleClick(e, appointment.id)}>{appointment.fio}</td>
-      <td onClick={(e) => handleClick(e, appointment.id)}>
-        {appointment.date}
+      <td onClick={(e) => handleClick(e, appointment._id)}>
+        {new Date(appointment.dateOfAppointment).toLocaleDateString()}{' '}
+        {appointment.time[0]}
       </td>
-      <td onClick={(e) => handleClick(e, appointment.id)}>
-        {appointment.doctor}
+      <td onClick={(e) => handleClick(e, appointment._id)}>
+        {`${appointment.doctor.surname} ${appointment.doctor.name}`}
       </td>
       <td>
         <CustomModal appointment={appointment} rm={removeAppointment} />

@@ -1,0 +1,25 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 100px repeat(auto-fill, 100px) 100px;
+}
+
+.button-container {
+  background-color: #006eff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.button-selected {
+  /* border: 4px solid #2ba154; */
+  background-color: #2ba154 !important;
+}
+
+.button-text {
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+}

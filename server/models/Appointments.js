@@ -10,6 +10,10 @@ const Appointments = new Schema(
       type: Date,
       required: true,
     },
+    time: {
+      type: Array,
+      required: true,
+    },
     doctor: {
       type: Types.ObjectId,
       ref: 'Doctors',
@@ -18,10 +22,25 @@ const Appointments = new Schema(
       type: Types.ObjectId,
       ref: 'Patients',
     },
-    hospital: {
-      type: Types.ObjectId,
-      ref: 'Hospital'
-    }
+    cart: [
+      {
+        _id: {
+          type: Types.ObjectId,
+        },
+        name: {
+          type: String,
+        },
+        count: {
+          type: Number,
+        },
+        price: {
+          type: Number,
+        },
+        sum: {
+          type: Number,
+        },
+      },
+    ],
   },
   {
     timestamps: true,

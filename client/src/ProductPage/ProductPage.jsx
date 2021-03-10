@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { products } from '../mocks/products';
 import './styles.css';
+import { useHttp } from '../hooks/http.hook';
+import { MainContext } from '../App';
+import { useMessage } from '../hooks/message.hook';
 
 const ProductPage = () => {
   const [product, setProduct] = useState({});
   const { id } = useParams();
+  const { request, loading } = useHttp();
+  const message = useMessage();
+  const { token } = useContext(MainContext);
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('ru-RU', {
@@ -14,9 +19,20 @@ const ProductPage = () => {
     }).format(price);
   };
 
+  const handleLoad = useCallback(async () => {
+    try {
+      const data = await request(`/api/products/${id}`, 'get', null, {
+        Authorization: `Bearer ${token}`,
+      });
+      if (data.message) return message(data.message);
+      console.log(data.product);
+      setProduct(data.product);
+    } catch (e) {}
+  }, [request, message, id, token]);
+
   useEffect(() => {
-    setProduct(products[id - 1]);
-  }, [id]);
+    handleLoad();
+  }, [handleLoad]);
 
   return (
     <>
@@ -48,7 +64,7 @@ const ProductPage = () => {
             <div>
               <span style={{ fontSize: 16, fontWeight: 600 }}>Описание:</span>
               <br />
-              <span>{product.description}</span>
+              {/* <span>{product.description}</span> */}
             </div>
           </div>
         </div>
@@ -57,4 +73,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default React.memo(ProductPage);

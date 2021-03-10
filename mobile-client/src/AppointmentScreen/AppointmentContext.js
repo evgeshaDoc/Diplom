@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 
 export default AppointmentContext = createContext({
-  // changeSum,
+  addToCart: function () {},
+  removeFromCart: function () {},
 });

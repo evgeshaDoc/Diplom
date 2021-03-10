@@ -8,8 +8,8 @@ import SidebarSearch from './SidebarSearch';
 const Sidebar = () => {
   return (
     <div className='main-container'>
-      <SidebarOrderBy />
       <SidebarSearch />
+      <SidebarOrderBy />
       <SidebarCategory />
       <SidebarPrice />
       <div className='sticky waves-effect'>
