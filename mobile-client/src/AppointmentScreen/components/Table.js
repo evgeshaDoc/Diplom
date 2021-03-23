@@ -5,14 +5,11 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import TableContent from './TableContent';
 import AppointmentContext from '../AppointmentContext';
 
-const Table = ({ patient }) => {
-  if (!patient.cart)
+const Table = ({ cart }) => {
+  if (!cart.length)
     return (
       <View style={styles.noGoodsContainer}>
         <Text style={styles.noGoodsText}>Расходников не добавлено</Text>
-        <View style={styles.noGoodsButtonContainer}>
-          <Text style={styles.noGoodsButtonText}>Добавить</Text>
-        </View>
       </View>
     );
   return (
@@ -32,12 +29,9 @@ const Table = ({ patient }) => {
             <Text>Цена</Text>
           </View>
         </View>
-        {patient.cart.map((item) => (
-          <TableContent key={`content-${item.id}`} item={item} />
+        {cart.map((item) => (
+          <TableContent key={`content-${item._id}`} item={item} />
         ))}
-      </View>
-      <View style={styles.iconContainer}>
-        <FontAwesome5 name='plus-circle' size={32} color='#c3c8cf' />
       </View>
     </View>
   );

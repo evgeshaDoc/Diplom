@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 const TableContent = ({ item }) => {
-  const [count, setCount] = useState('');
-  const [price, setPrice] = useState('');
-
   const formatPrice = (price) => {
     return new Intl.NumberFormat('ru-RU', {
       currency: 'rub',
@@ -12,32 +9,16 @@ const TableContent = ({ item }) => {
     }).format(price);
   };
 
-  useEffect(() => {
-    setCount(`${item.count}`);
-    setPrice(`${item.price * item.count}`);
-  }, []);
-
-  useEffect(() => {
-    setPrice(`${count * item.price}`);
-  }, [count]);
-
   return (
     <View style={styles.tableItems}>
       <View style={[styles.itemContainer, { flex: 0.8 }]}>
         <Text>{item.name}</Text>
       </View>
       <View style={[styles.itemContainer, { alignItems: 'center', flex: 0.3 }]}>
-        <TextInput
-          value={count}
-          onChangeText={(text) => setCount(text)}
-          keyboardType='decimal-pad'
-          defaultValue={`${item.count}`}
-          textAlign={'center'}
-          style={styles.inputStyle}
-        />
+        <Text>{item.count}</Text>
       </View>
       <View style={[styles.itemContainer, { flex: 0.4, alignItems: 'center' }]}>
-        <Text>{formatPrice(price)}</Text>
+        <Text>{formatPrice(item.sum)}</Text>
       </View>
     </View>
   );

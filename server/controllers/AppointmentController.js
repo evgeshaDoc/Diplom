@@ -11,6 +11,7 @@ module.exports = class AppointmentController {
   static getAppointments = async (req, res) => {
     try {
       const { date, orderBy } = req.query;
+      console.log(req.query);
       const newDate = Date.parse(date);
 
       const appointments = await Appointments.find({

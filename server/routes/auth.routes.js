@@ -109,10 +109,11 @@ router.get('/', async (req, res) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
 
-    if (!token) return res.status(401).json({ message: 'Вы не авторизованы' });
-
-    req.user = await jwt.verify(token, process.env.TOKEN_SECRET);
-    console.log(req.user);
+    if (!token)
+      return res
+        .status(401)
+        .json({ message: 'Вы не авторизованы', expired: true });
+    else return res.json({ expired: false });
   } catch (e) {
     res.status(500).json({
       message: 'Что-то пошло не так, попробуйте снова',

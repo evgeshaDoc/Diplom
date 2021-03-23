@@ -8,30 +8,27 @@ import RoundedLetter from './RoundedLetter';
 const AppointmentsList = ({ item }) => {
   const navigation = useNavigation();
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('ru-RU', {
-      currency: 'rub',
-      style: 'currency',
-    }).format(price);
-  };
-
   return (
     <TouchableOpacity
       style={styles.listContainer}
-      onPress={() => navigation.navigate('Appointment', { patient: item })}
+      onPress={() =>
+        navigation.navigate('Appointment', {
+          screen: 'Appointment',
+          params: { id: item._id, time: item.time[0] },
+        })
+      }
     >
       <View style={{ flexDirection: 'row' }}>
-        <RoundedLetter letter={item.surname} />
+        <RoundedLetter letter={item.patient.surname} />
         <View style={styles.infoContainer}>
           <View style={styles.personalContainer}>
-            <Text style={styles.personText}>{item.name}</Text>
-            <Text style={styles.personText}> {item.surname}</Text>
+            <Text style={styles.personText}>{item.patient.name}</Text>
+            <Text style={styles.personText}> {item.patient.surname}</Text>
           </View>
           {item.diag && <Text>{item.diag}</Text>}
         </View>
       </View>
-      {/* {item.price && <Text>{formatPrice(item.price)}</Text>} */}
-      <AppointmentTime time={item.time} />
+      <AppointmentTime time={item.time[0]} />
     </TouchableOpacity>
   );
 };

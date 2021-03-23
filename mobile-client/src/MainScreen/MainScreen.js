@@ -1,117 +1,78 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
-  Text,
   View,
-  TouchableOpacity,
-  TextInput,
   StyleSheet,
-  Dimensions,
   FlatList,
-  Image,
+  ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Toast } from 'native-base';
 
 import TopButtons from './components/TopButtons';
 import AppointmentsList from './components/AppointmentsList';
-
-const { height, width } = Dimensions.get('window');
-
-const data = [
-  {
-    id: 1,
-    name: 'Петр',
-    surname: 'Верзилов',
-    diag: 'smth1',
-    image:
-      'https://images.pexels.com/photos/5332011/pexels-photo-5332011.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    time: '14:00',
-    price: 3000,
-    cart: [
-      {
-        id: 532,
-        name: 'Ретрагель',
-        count: 1,
-        price: 453,
-      },
-      {
-        id: 777,
-        name: 'Citrix',
-        count: 2,
-        price: 1371,
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Николай',
-    surname: 'Васильев',
-    diag: 'smth2',
-    image:
-      'https://images.pexels.com/photos/5332002/pexels-photo-5332002.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    time: '20:00',
-  },
-  {
-    id: 3,
-    name: 'Андрей',
-    surname: 'Курочкин',
-    // diag: 'smth3',
-    image:
-      'https://images.pexels.com/photos/5332001/pexels-photo-5332001.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    time: '15:00',
-  },
-  {
-    id: 4,
-    name: 'Павел',
-    surname: 'Сергеев',
-    diag: 'smth4',
-    image:
-      'https://images.pexels.com/photos/5332011/pexels-photo-5332011.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    time: '13:00',
-    price: 12000,
-  },
-  {
-    id: 5,
-    name: 'Евгений',
-    surname: 'Веточкин',
-    diag: 'smth5',
-    image:
-      'https://images.pexels.com/photos/5332002/pexels-photo-5332002.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    time: '13:30',
-    price: 60000,
-  },
-  {
-    id: 6,
-    name: 'Сергей',
-    surname: 'Мамутов',
-    // diag: 'smth6',
-    image:
-      'https://images.pexels.com/photos/5332001/pexels-photo-5332001.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    time: '15:30',
-  },
-];
+import { useHttp } from '../hooks/http.hook';
+import { HOST_WITH_PORT } from '../../constants';
+import { MainContext } from '../../App';
 
 const MainScreen = ({ navigation }) => {
-  const [fetched, setFetched] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const [date, setDate] = useState(() => {
+    let date = new Date();
+    date.setHours(0, 0, 0);
+    return date.toString();
+  });
+  const { request, loading } = useHttp();
+  const { token } = useContext(MainContext);
 
-  // const fetchItems = async () => {
-  //   const response = await fetch('https://jsonplaceholder.typicode.com/posts&_limit=10')
-  //   const data = response.json()
-  //   setFetched(data)
-  //   console.log(fetched)
-  // }
+  const loadData = async () => {
+    try {
+      const data = await request(
+        `${HOST_WITH_PORT}/api/appointments/?date=${date}`,
+        'get',
+        null,
+        { Authorization: `Bearer ${token}` }
+      );
+      console.log(data);
+      setAppointments(data.appointments);
+    } catch (e) {}
+  };
+
+  const changeDate = (val) => {
+    const newDate = new Date(val);
+    newDate.setHours(0, 0, 0);
+    setDate(newDate.toString());
+  };
+
+  const refreshData = async () => {
+    setRefreshing(true);
+    await loadData();
+    setRefreshing(false);
+  };
 
   useEffect(() => {
-    setFetched(data);
+    console.log(date);
+    loadData();
+  }, [date]);
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   return (
     <View style={styles.container}>
-      <TopButtons />
-      <FlatList
-        data={data}
-        keyExtractor={(item) => `appointment-${item.id}`}
-        renderItem={({ item }) => <AppointmentsList item={item} />}
-      />
+      <TopButtons changeDate={changeDate} />
+      {loading ? (
+        <ActivityIndicator size='large' />
+      ) : (
+        <FlatList
+          data={appointments}
+          keyExtractor={(item) => `appointment-${item._id}`}
+          renderItem={({ item }) => <AppointmentsList item={item} />}
+          onRefresh={refreshData}
+          refreshing={refreshing}
+        />
+      )}
     </View>
   );
 };

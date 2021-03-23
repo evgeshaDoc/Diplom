@@ -14,7 +14,10 @@ const Users = new Schema({
     type: String,
     required: true,
   },
-  surname: String,
+  surname: {
+    type: String,
+    required: true,
+  },
   patronymic: String,
   post: {
     type: String,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -6,39 +6,71 @@ import {
   TouchableOpacity,
   Dimensions,
   TextInput,
-} from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { Calendar } from 'react-native-calendars';
 
-const { height, width } = Dimensions.get('window')
+const { height, width } = Dimensions.get('window');
 
-const TopButtons = () => {
-  const [search, setSearch] = useState('')
+const TopButtons = ({ changeDate }) => {
+  const [search, setSearch] = useState('');
+  const [show, setShow] = useState(false);
+  const [localDate, setLocalDate] = useState(new Date());
+
+  useEffect(() => {
+    const newDate = new Date(localDate);
+    console.log(newDate.toString());
+  }, [localDate]);
 
   return (
-    <View style={styles.topButtonsContainer}>
-      <TouchableOpacity style={styles.filtersContainer}>
-        <Text style={{ alignSelf: 'center' }}>Фильтры</Text>
-      </TouchableOpacity>
-      <View style={styles.inputContainer}>
-        <Ionicons
-          name="md-search"
-          size={18}
-          style={{ position: 'relative', marginRight: 5 }}
-          color="rgba(120,120,10, 1)"
-        />
-        <TextInput
-          value={search}
-          placeholder={'Поиск'}
-          onChangeText={(text) => setSearch(text)}
-          autoCorrect={false}
-          returnKeyType="search"
-        />
+    <View>
+      <View style={styles.topButtonsContainer}>
+        <TouchableOpacity
+          style={styles.filtersContainer}
+          onPress={() => setShow(!show)}
+        >
+          <Text style={{ alignSelf: 'center' }}>Фильтры</Text>
+        </TouchableOpacity>
+        <View style={styles.inputContainer}>
+          <Ionicons
+            name='md-search'
+            size={18}
+            style={{ position: 'relative', marginRight: 5 }}
+            color='rgba(120,120,10, 1)'
+          />
+          <TextInput
+            value={search}
+            placeholder={'Поиск'}
+            onChangeText={(text) => setSearch(text)}
+            autoCorrect={false}
+            returnKeyType='search'
+          />
+        </View>
       </View>
+      {show ? (
+        <View>
+          <Calendar
+            current={localDate}
+            markedDates={{
+              [localDate]: {
+                selected: true,
+                disableTouchEvent: true,
+                selectedColor: 'orange',
+                selectedTextColor: 'red',
+              },
+            }}
+            onDayPress={(day) => {
+              setLocalDate(day.dateString);
+              changeDate(day.dateString);
+            }}
+          />
+        </View>
+      ) : null}
     </View>
-  )
-}
+  );
+};
 
-export default TopButtons
+export default TopButtons;
 
 const styles = StyleSheet.create({
   topButtonsContainer: {
@@ -62,4 +94,4 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-})
+});

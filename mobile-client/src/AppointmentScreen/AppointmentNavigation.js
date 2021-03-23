@@ -13,3 +13,5 @@ const AppointmentNavigation = () => {
     </Stack.Navigator>
   );
 };
+
+export default AppointmentNavigation;

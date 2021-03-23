@@ -1,23 +1,21 @@
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import ProductsScreen from '../ProductsScreen/ProductsScreen';
 
-import PatientsScreen from '../PatientsScreen/PatientsScreen'
-
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
 const PatientsTab = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen 
-        name="Main"
-        component={PatientsScreen} 
+      <Stack.Screen
+        name='Main'
+        component={ProductsScreen}
         options={{
-          headerShown: false
-        }} 
+          title: 'Товары и услуги',
+        }}
       />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
-export default PatientsTab
-
+export default PatientsTab;
